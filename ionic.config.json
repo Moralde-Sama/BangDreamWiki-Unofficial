@@ -1,6 +1,8 @@
 {
   "name": "BangDreamWiki",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "23990969"
 }
