@@ -1,33 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import { MemService } from '../services/members/mem.service';
+import { Members } from '../services/members/mem.class.members';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list',
   templateUrl: 'list.page.html',
-  styleUrls: ['list.page.scss']
+  styleUrls: ['list.page.scss'],
+  providers: [MemService, Members]
 })
 export class ListPage implements OnInit {
-  private selectedItem: any;
-  private icons = [
-    'flask',
-    'wifi',
-    'beer',
-    'football',
-    'basketball',
-    'paper-plane',
-    'american-football',
-    'boat',
-    'bluetooth',
-    'build'
-  ];
-  public items: Array<{ title: string; note: string; icon: string }> = [];
-  constructor() {
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  private next: string;
+  private memberss: Array<Members> = [];
+  private getMemResult: Observable<Object>;
+  // tslint:disable-next-line:quotemark
+  private bands: Array<string> = ["https://i.bandori.party/static/img/band/Poppin'Party.png",
+'https://i.bandori.party/static/img/band/Afterglow.png', 'https://i.bandori.party/static/img/band/Hello,%20Happy%20World!.png',
+'https://i.bandori.party/static/img/band/Pastel*Palettes.png', 'https://i.bandori.party/static/img/band/Roselia.png'];
+  constructor(public toastCtrl: ToastController,
+    private memservice: MemService, private memClass: Members) {
+      this.getMembersList();
+  }
+  async showShit(message: string) {
+    const toast = await this.toastCtrl.create({
+          message: message,
+          duration: 2000,
+          position: 'bottom'
+        });
+    toast.present();
+  }
+
+  private async getMembersList() {
+    await this.memservice.getMembers().then(result => {
+      // tslint:disable-next-line:quotemark
+      this.memberss = result['results'];
+    });
   }
 
   ngOnInit() {

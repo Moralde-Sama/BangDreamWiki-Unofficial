@@ -1,27 +1,19 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      List
+      Bands
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-icon [name]="item.icon" slot="start"></ion-icon>
-      {{item.title}}
-      <div class="item-note" slot="end">
-        {{item.note}}
+  <ion-card *ngFor="let band of bands" class="ion-activatable" (click)="showShit('hello')">
+      <ion-ripple-effect></ion-ripple-effect>
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <img [src]="band" style="width: 70%; height: 70%;">
       </div>
-    </ion-item>
-  </ion-list>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
+    </ion-card>
 </ion-content>
