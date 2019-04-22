@@ -10,10 +10,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { Eventdetails2Component } from './home/eventdetails2/eventdetails2.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, Eventdetails2Component],
+  entryComponents: [Eventdetails2Component],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

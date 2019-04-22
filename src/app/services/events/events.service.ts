@@ -11,4 +11,7 @@ export class EventsService {
   async getEvents() {
     return await this.http.get<Observable<Object>>('https://bandori.party/api/events/').toPromise();
   }
+  async getEventsByPage(pagelink: string) {
+    return await this.http.get<Observable<Object>>(pagelink).toPromise();
+  }
 }

@@ -15,7 +15,7 @@ export class ListPage implements OnInit {
   private memberss: Array<Members> = [];
   private getMemResult: Observable<Object>;
   // tslint:disable-next-line:quotemark
-  private bands: Array<string> = ["https://i.bandori.party/static/img/band/Poppin'Party.png",
+  public bands: Array<string> = ["https://i.bandori.party/static/img/band/Poppin'Party.png",
 'https://i.bandori.party/static/img/band/Afterglow.png', 'https://i.bandori.party/static/img/band/Hello,%20Happy%20World!.png',
 'https://i.bandori.party/static/img/band/Pastel*Palettes.png', 'https://i.bandori.party/static/img/band/Roselia.png'];
   constructor(public toastCtrl: ToastController,
