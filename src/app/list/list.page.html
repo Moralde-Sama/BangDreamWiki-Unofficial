@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let band of bands" class="ion-activatable" (click)="showShit('hello')">
+  <ion-card color="primary" *ngFor="let band of bands" class="ion-activatable" (click)="showShit('hello')">
       <ion-ripple-effect></ion-ripple-effect>
       <div style="display: flex; justify-content: center; align-items: center;">
         <img [src]="band" style="width: 70%; height: 70%;">

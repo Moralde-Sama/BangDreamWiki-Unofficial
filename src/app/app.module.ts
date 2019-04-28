@@ -11,9 +11,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Eventdetails2Component } from './home/eventdetails2/eventdetails2.component';
+import { BoostAttributePipe } from './pipes/boostattribute/boost-attribute.pipe';
+import { MembersPipe } from './pipes/members/members.pipe';
 
 @NgModule({
-  declarations: [AppComponent, Eventdetails2Component],
+  declarations: [AppComponent, Eventdetails2Component, BoostAttributePipe, MembersPipe],
   entryComponents: [Eventdetails2Component],
   imports: [
     BrowserModule,
