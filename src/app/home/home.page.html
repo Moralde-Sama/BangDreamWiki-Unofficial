@@ -6,6 +6,11 @@
     <ion-title>
       Events
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button color="secondary" (click)="presentPopover($event)">
+        <ion-icon slot="icon-only" name="switch" style="color:white;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,8 +19,7 @@
       <ion-ripple-effect></ion-ripple-effect>
       <img [src]="event.english_image" alt="">
     </ion-card>
-    
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll threshold="80px" (ionInfinite)="loadData($event)" style="margin-top: 20px;">
       <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more data...">
 
       </ion-infinite-scroll-content>

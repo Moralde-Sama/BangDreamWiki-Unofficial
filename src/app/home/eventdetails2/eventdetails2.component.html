@@ -75,7 +75,6 @@
             </ng-container>
           </div>
         </ion-col>
-        
         <!-- <ion-col size="12" *ngIf="eventDetails.boost_members.length > 3">
             <img *ngFor="let member of eventDetails.boost_members; index as i" *ngIf="i > 2" class="members" src="{{ member | members }}" />
         </ion-col> -->
@@ -85,7 +84,7 @@
         </ion-col>
         <ion-col size="12" style="margin-top: 5px;">
           <div class="center_content">
-              <ion-img class="cards" *ngFor="let card of cardsDetails" [src]="card.image"></ion-img>
+              <img *ngFor="let card of cardsDetails" class="cards" src="{{card.image}}" (click)="showCardDetails(card)"/>
           </div>
         </ion-col>
     </ion-row>

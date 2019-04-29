@@ -20,7 +20,6 @@ export class Eventdetails2Component implements OnInit {
 
   ngOnInit() {
     this.eventDetails = JSON.parse(this.eventdata);
-    console.log(this.eventDetails);
     this.cardsDetails = JSON.parse(this.carddetails);
     this.platform.backButton.subscribe(() => {
       this.modalCtrl.dismiss();
@@ -31,6 +30,9 @@ export class Eventdetails2Component implements OnInit {
   }
   setEventType(type: string): string {
     return this.eventType.getType(type);
+  }
+  showCardDetails(card: CardDetail) {
+    console.log(card);
   }
 
 }
