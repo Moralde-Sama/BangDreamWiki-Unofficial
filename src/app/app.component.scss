@@ -2,7 +2,14 @@
   	Flaticon icon font: Flaticon
   	Creation date: 02/11/2018 10:09
   	*/
-
+    @font-face {
+      font-family: "Softsoul";
+      src: url("/assets/softsoulfont/Softsoul.eot");
+      src: 
+      url("/assets/softsoulfont/Softsoul.woff") format("woff"),
+      url("/assets/softsoulfont/Softsoul.ttf") format("truetype"),
+      url("/assets/softsoulfont/Softsoul.svg#Softsoul") format("svg");
+    }
       @font-face {
         font-family: "Flaticon";
         src: url("../assets/flaticon/Flaticon.eot");

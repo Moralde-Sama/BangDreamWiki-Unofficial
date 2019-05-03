@@ -7,7 +7,7 @@ import { NavParams, PopoverController, AlertController } from '@ionic/angular';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
-  public filter: Array<{}>;
+  public filter: Array<boolean>;
   constructor(private navParams: NavParams, private popoverCtrl: PopoverController,
     private alertCtrl: AlertController) { }
 
@@ -23,12 +23,27 @@ export class FilterComponent implements OnInit {
         role: 'cancel',
         cssClass: 'secondary',
         handler: () => {
-          this.filter[0] = false;
+          this.filter[1] = false;
         }
-      }, 'Yes']
+      }, {
+        text: 'Yes',
+        cssClass: 'primary',
+        handler: () => {
+          this.toggle(1);
+        }
+      }]
     });
     await alert.present();
   }
+  //
+  toggle(position: number) {
+    if (position === 0) {
+      this.filter[1] = false;
+    } else {
+      this.filter[0] = false;
+    }
+  }
+  //
   closePopOver() {
     this.popoverCtrl.dismiss(this.filter);
   }

@@ -1,17 +1,16 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { EventsService } from '../services/events/events.service';
 import { IonInfiniteScroll, ModalController, LoadingController } from '@ionic/angular';
-import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
 import { Eventdetails2Component } from './eventdetails2/eventdetails2.component';
 import { CardDetail} from './class/home.class.card';
 import { PopoverController } from '@ionic/angular';
 import { FilterComponent } from './filter/filter.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
-  providers: [NativePageTransitions]
+  styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -21,6 +20,8 @@ export class HomePage implements OnInit {
   private cardetails: Array<CardDetail> = [];
   private settings: Array<{}> = [false, false, false];
   private is_date_sorted = false;
+  public is_upcoming_sorted = false;
+  private is_reverse = false;
   constructor(private eventsService: EventsService,
     private popoverCtrl: PopoverController, private modalCtrl: ModalController,
     private loading: LoadingController) {
@@ -108,6 +109,7 @@ export class HomePage implements OnInit {
   }
   //
   async presentPopover(ev: any) {
+    let popover_data;
     const popover = await this.popoverCtrl.create({
       component: FilterComponent,
       componentProps: {data: this.settings},
@@ -117,34 +119,52 @@ export class HomePage implements OnInit {
     });
     await popover.present();
     await popover.onDidDismiss().then(d => {
-      let count = 0;
-      for (const data of d.data) {
-        if (data) {
+      popover_data = d.data;
+    });
+    await this.popoverSort(popover_data);
+  }
+  //
+  async popoverSort(data: any) {
+    let count = 0;
+      for (const result of data) {
+        if (result) {
           if (count === 0) {
-            if (!this.is_date_sorted) {
-              this.is_date_sorted = true;
-              this.sortByDate();
+            if (!this.is_upcoming_sorted) {
+              await this.sortByUpcomingEvnt();
             }
+          } else if (count === 1) {
+            if (!this.is_date_sorted) {
+              await this.sortByDate();
+              this.is_date_sorted = result;
+            }
+          } else if (count === 2) {
+            if (this.is_upcoming_sorted) {
+              await this.events.reverse();
+            }
+            this.is_reverse = result;
+          }
+        } else {
+          if (count === 0 && this.is_upcoming_sorted) {
+            this.is_upcoming_sorted = result;
+            await this.ngOnInit();
+          }
+          if (count === 2 && this.is_reverse) {
+            await this.events.reverse();
+            this.is_reverse = result;
           }
         }
         count++;
       }
-    });
-  }
-  //
- async sort() {
-    if (this.settings['upcoming']) {
-    }
   }
   //
   async sortByDate() {
     // init loading
     const loading = await this.showLoading('Sorting by date...');
+    const events = [];
     await loading.present();
     // download all events
-    const is_events_exist = true;
     let count_null = 0;
-    while (is_events_exist) {
+    while (1) {
       if (count_null < 8) {
         await this.eventsService.getEventsByPage(this.nextPage).then(data => {
           if (data['next'] != null) {
@@ -152,7 +172,7 @@ export class HomePage implements OnInit {
             data['results'].forEach(d => {
               if (d != null) {
                 if (d['english_start_date'] != null) {
-                 this.events.push(d);
+                  events.push(d);
                 } else {
                   count_null++;
                 }
@@ -161,15 +181,61 @@ export class HomePage implements OnInit {
           }
         });
       } else {
-        for (const event of this.events) {
+        for (const event of events) {
           const date = new Date(event['english_start_date']);
           event['english_start_date'] = date;
         }
+        this.events = [];
+        this.events = events;
         this.events.sort((a, b) => a['english_start_date'] - b['english_start_date']);
         this.infiniteScroll.disabled = true;
         break;
       }
     }
     await loading.dismiss();
+  }
+  //
+  async sortByUpcomingEvnt() {
+    let pagelink = 'https://bandori.party/api/events/?page=1';
+    const currnt_date = new Date();
+    let count = 0;
+    const events = [];
+    const loading = await this.showLoading('Fetching Upcoming and Current Events');
+    await loading.present();
+    while (1) {
+      await this.eventsService.getEventsByPage(pagelink).then(data => {
+        pagelink = data['next'];
+        data['results'].forEach(event => {
+          if (event['english_end_date'] != null) {
+            if (new Date(event['english_end_date']) > currnt_date) {
+              events.push(event);
+            }
+          } else {
+            count++;
+          }
+        });
+      });
+      if (count > 9) {
+        break;
+      }  else {
+        count = 0;
+      }
+    }
+    this.is_upcoming_sorted = true;
+    this.events = events;
+    if (this.is_reverse) {
+      this.events.reverse();
+    }
+    await loading.dismiss();
+  }
+  //
+  getUpcomingDate(start: string, end: string) {
+    const event_start = moment(start);
+    const event_end = moment(end);
+    if (event_start > moment()) {
+      return 'Event Start ' + event_start.fromNow();
+    } else {
+      return 'Event End ' + event_end.fromNow();
+    }
   }
 }

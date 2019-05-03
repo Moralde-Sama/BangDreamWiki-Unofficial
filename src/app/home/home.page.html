@@ -17,7 +17,8 @@
 <ion-content>
     <ion-card *ngFor="let event of events" class="ion-activatable" (click)="showEventDetails(event)">
       <ion-ripple-effect></ion-ripple-effect>
-      <img [src]="event.english_image" alt="">
+      <img [src]="event.english_image" alt="" style="margin-bottom: 3px;">
+      <ion-label *ngIf="is_upcoming_sorted">{{getUpcomingDate(event.english_start_date, event.english_end_date)}}</ion-label>
     </ion-card>
     <ion-infinite-scroll threshold="80px" (ionInfinite)="loadData($event)" style="margin-top: 20px;">
       <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading more data...">
