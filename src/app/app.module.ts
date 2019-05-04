@@ -15,10 +15,12 @@ import { Eventdetails2Component } from './home/eventdetails2/eventdetails2.compo
 import { BoostAttributePipe } from './pipes/boostattribute/boost-attribute.pipe';
 import { MembersPipe } from './pipes/members/members.pipe';
 import { FilterComponent } from './home/filter/filter.component';
+import { CarddetailsComponent } from './home/carddetails/carddetails.component';
 
 @NgModule({
-  declarations: [AppComponent, Eventdetails2Component, BoostAttributePipe, MembersPipe, FilterComponent],
-  entryComponents: [Eventdetails2Component, FilterComponent],
+  declarations: [AppComponent, Eventdetails2Component, BoostAttributePipe, MembersPipe, FilterComponent,
+     CarddetailsComponent],
+  entryComponents: [Eventdetails2Component, FilterComponent, CarddetailsComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

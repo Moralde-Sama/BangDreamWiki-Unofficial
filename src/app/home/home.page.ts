@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { EventsService } from '../services/events/events.service';
 import { IonInfiniteScroll, ModalController, LoadingController } from '@ionic/angular';
 import { Eventdetails2Component } from './eventdetails2/eventdetails2.component';
@@ -15,16 +15,17 @@ import * as moment from 'moment';
 export class HomePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   public events: Array<Object> = [];
+  public show_date = false;
   private cardsid: Array<number> = [];
   private nextPage: string;
   private cardetails: Array<CardDetail> = [];
   private settings: Array<{}> = [false, false, false];
+  private is_upcoming_sorted = false;
   private is_date_sorted = false;
-  public is_upcoming_sorted = false;
   private is_reverse = false;
   constructor(private eventsService: EventsService,
     private popoverCtrl: PopoverController, private modalCtrl: ModalController,
-    private loading: LoadingController) {
+    private loading: LoadingController, private renderer: Renderer2) {
   }
   //
   async ngOnInit() {
@@ -233,9 +234,22 @@ export class HomePage implements OnInit {
     const event_start = moment(start);
     const event_end = moment(end);
     if (event_start > moment()) {
-      return 'Event Start ' + event_start.fromNow();
+      return 'Event Starts ' + event_start.fromNow();
     } else {
-      return 'Event End ' + event_end.fromNow();
+      return 'Event Ends ' + event_end.fromNow();
+    }
+  }
+  //
+  async imgLoaded(index: number) {
+    const get_elem_img = document.getElementsByName('event_img');
+    const get_elem_spinner = document.getElementsByTagName('ion-spinner');
+    const get_elem_card = document.getElementsByTagName('ion-card');
+    this.renderer.setStyle(get_elem_spinner[index], 'display', 'none');
+    this.renderer.setStyle(get_elem_img[index], 'display', 'block');
+    this.renderer.setStyle(get_elem_card[index], 'background-color', '#E40046');
+    this.renderer.setStyle(get_elem_card[index], 'height', 'auto');
+    if (this.is_upcoming_sorted) {
+      this.show_date = true;
     }
   }
 }

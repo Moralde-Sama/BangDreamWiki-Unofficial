@@ -1,0 +1,25 @@
+$background_color: #E40046;
+$text_color: #666666;
+.container {
+    position: relative;
+    padding: 0 15px;
+    .rarity {
+        position: absolute;
+        bottom: 15px;
+        left: 18px;
+        width: 30px;
+    }
+    img {
+        border-radius: 10px;
+        box-shadow: 2px 4px 7px 1px rgba(0,0,0,0.37);
+    }
+}
+.center_content {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+ion-label {
+    font-family: 'Softsoul',impact,sans-serif;
+    color: $text_color;
+}

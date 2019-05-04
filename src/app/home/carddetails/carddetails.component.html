@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" (click)="backbtn()">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+    <ion-title style="margin-left: -15px;">Card Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="center_content" style="margin: 10px; font-size: 23px;">
+    <ion-label>★★ {{cardDetails.name}}</ion-label>
+  </div>
+  <div class="container">
+    <img src="/assets/rarity/4.png" class="rarity" alt="">
+    <img src="{{cardDetails.art}}" alt=""/>
+  </div>
+  
+</ion-content>

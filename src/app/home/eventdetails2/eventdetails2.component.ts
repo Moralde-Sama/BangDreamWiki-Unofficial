@@ -3,6 +3,7 @@ import { EventDetails } from './class/eventdetails.class.eventdetails';
 import { EventType } from './class/eventdetails.class.eventtype';
 import { NavController, ModalController, Platform } from '@ionic/angular';
 import { CardDetail } from '../class/home.class.card';
+import { CarddetailsComponent } from '../carddetails/carddetails.component';
 
 @Component({
   selector: 'app-eventdetails2',
@@ -31,7 +32,12 @@ export class Eventdetails2Component implements OnInit {
   setEventType(type: string): string {
     return this.eventType.getType(type);
   }
-  showCardDetails(card: CardDetail) {
+  async showCardDetails(card: CardDetail) {
+    const modal = await this.modalCtrl.create({
+      component: CarddetailsComponent,
+      componentProps: { carddetails: JSON.stringify(card)}
+    });
+    await modal.present();
     console.log(card);
   }
 

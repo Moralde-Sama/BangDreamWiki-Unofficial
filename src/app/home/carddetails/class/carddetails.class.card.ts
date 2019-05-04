@@ -1,0 +1,35 @@
+export class CardDetails {
+    id: number;
+    member: number;
+    i_rarity: number;
+    i_attribute: string;
+    name: string;
+    japanese_name: string;
+    release_date: string;
+    is_promo: boolean;
+    is_original: boolean;
+    image: string;
+    image_trained: string;
+    art: string;
+    art_trained: string;
+    transparent: string;
+    transparent_trained: string;
+    skill_name: string;
+    japanese_skill_name: string;
+    i_skill_type: string;
+    i_side_skill_type: string;
+    skill_template: string;
+    skill_variables: {};
+    side_skill_template: string;
+    full_skill: string;
+    performance_min: number;
+    performance_max: number;
+    performance_trained_max: number;
+    technique_min: number;
+    technique_max: number;
+    technique_trained_max: number;
+    visual_min: number;
+    visual_max: number;
+    visual_trained_max: number;
+    cameo_members: Array<number>;
+}
