@@ -9,7 +9,7 @@ import { CardDetails } from './class/carddetails.class.card';
 })
 export class CarddetailsComponent implements OnInit {
   @Input() carddetails: string;
-  public cardDetails: Array<CardDetails> = [];
+  public cardDetails: CardDetails;
   constructor(private modalCtrl: ModalController) { }
 
   async ngOnInit() {

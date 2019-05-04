@@ -8,10 +8,13 @@ ion-card {
   padding: 3px 3px 0 3px;
   text-align: center;
   height: 135px;
-  background-color: #f9ccda;
+  --background: url('/assets/img/bg_pattern.png');
   ion-label {
     font-family: 'Softsoul',impact,sans-serif;
     font-size: 20px;
     color: white;
   }
+}
+ion-content {
+  --background: url('/assets/img/bg_pattern.png');
 }

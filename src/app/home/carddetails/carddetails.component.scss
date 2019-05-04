@@ -10,9 +10,12 @@ $text_color: #666666;
         width: 30px;
     }
     img {
-        border-radius: 10px;
+        border-radius: 5px;
         box-shadow: 2px 4px 7px 1px rgba(0,0,0,0.37);
     }
+}
+ion-content {
+  --background: url('/assets/img/bg_pattern.png');
 }
 .center_content {
     display:flex;

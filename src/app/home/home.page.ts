@@ -246,6 +246,7 @@ export class HomePage implements OnInit {
     const get_elem_card = document.getElementsByTagName('ion-card');
     this.renderer.setStyle(get_elem_spinner[index], 'display', 'none');
     this.renderer.setStyle(get_elem_img[index], 'display', 'block');
+    this.renderer.setStyle(get_elem_card[index], 'background', 'none');
     this.renderer.setStyle(get_elem_card[index], 'background-color', '#E40046');
     this.renderer.setStyle(get_elem_card[index], 'height', 'auto');
     if (this.is_upcoming_sorted) {

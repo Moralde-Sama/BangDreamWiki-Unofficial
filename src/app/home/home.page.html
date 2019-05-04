@@ -17,7 +17,7 @@
 <ion-content>
     <ion-card *ngFor="let event of events; let i = index" class="ion-activatable" (click)="showEventDetails(event)">
       <ion-ripple-effect></ion-ripple-effect>
-      <ion-spinner name="lines" color="primary" style="width: 50%; margin-top: 45px;"></ion-spinner>
+      <ion-spinner name="lines" color="primary" style="width: 50%; margin-top: 55px;"></ion-spinner>
       <img name="event_img" [src]="event.english_image" alt="" style="margin-bottom: 3px; display: none;" (load)="imgLoaded(i)"/>
       <ion-label *ngIf="show_date">{{getUpcomingDate(event.english_start_date, event.english_end_date)}}</ion-label>
     </ion-card>

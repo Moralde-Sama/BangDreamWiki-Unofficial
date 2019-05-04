@@ -38,7 +38,6 @@ export class Eventdetails2Component implements OnInit {
       componentProps: { carddetails: JSON.stringify(card)}
     });
     await modal.present();
-    console.log(card);
   }
 
 }
