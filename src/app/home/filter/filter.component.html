@@ -13,7 +13,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Reverse</ion-label>
-      <ion-toggle color="primary" [(ngModel)]="filter[2]"></ion-toggle>
+      <ion-toggle color="primary" [(ngModel)]="filter[2]" [disabled]="!filter[0] && !filter[1]"></ion-toggle>
     </ion-item>
   </ion-list>
   <div style="text-align: center; margin-bottom: 10px;">

@@ -139,15 +139,15 @@ export class HomePage implements OnInit {
               this.is_date_sorted = result;
             }
           } else if (count === 2) {
-            if (this.is_upcoming_sorted) {
-              await this.events.reverse();
-            }
+            await this.events.reverse();
             this.is_reverse = result;
           }
         } else {
           if (count === 0 && this.is_upcoming_sorted) {
             this.is_upcoming_sorted = result;
-            await this.ngOnInit();
+            if (!this.is_date_sorted) {
+              await this.ngOnInit();
+            }
           }
           if (count === 2 && this.is_reverse) {
             await this.events.reverse();
@@ -161,6 +161,7 @@ export class HomePage implements OnInit {
   async sortByDate() {
     // init loading
     const loading = await this.showLoading('Sorting by date...');
+    this.nextPage = 'https://bandori.party/api/events/?page=1';
     const events = [];
     await loading.present();
     // download all events
@@ -250,7 +251,7 @@ export class HomePage implements OnInit {
     this.renderer.setStyle(get_elem_card[index], 'background-color', '#E40046');
     this.renderer.setStyle(get_elem_card[index], 'height', 'auto');
     if (this.is_upcoming_sorted) {
-      this.show_date = true;
+      this.renderer.setStyle(get_elem_card[index]['children'][3], 'display', 'block');
     }
   }
 }
