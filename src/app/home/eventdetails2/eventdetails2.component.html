@@ -84,7 +84,7 @@
         </ion-col>
         <ion-col size="12" style="margin-top: 5px;">
           <div class="center_content">
-              <img *ngFor="let card of cardsDetails" class="cards" src="{{card.image}}" (click)="showCardDetails(card)"/>
+              <img *ngFor="let card of cardsDetails; let i = index" class="cards" src="{{card.image}}" (click)="showCardDetails(card)" (load)="imgLoaded(i)"/>
           </div>
         </ion-col>
     </ion-row>

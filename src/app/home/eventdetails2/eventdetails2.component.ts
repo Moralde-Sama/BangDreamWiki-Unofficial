@@ -39,5 +39,8 @@ export class Eventdetails2Component implements OnInit {
     });
     await modal.present();
   }
+  async imgLoaded(index: number) {
+    console.log(index);
+  }
 
 }
