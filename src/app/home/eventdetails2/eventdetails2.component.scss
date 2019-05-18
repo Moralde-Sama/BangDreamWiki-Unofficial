@@ -1,11 +1,13 @@
+
+$font_family: softsoul,impact,sans-serif;
 .ion-label-normal {
-    font-family: 'Softsoul',impact,sans-serif;
+    font-family: $font_family;
     color: #666666;
     font-size: 25px;
 }
 .ion-label {
     text-align: center;
-    font-family: 'Softsoul',impact,sans-serif;
+    font-family: $font_family;
     // color: #e40046;
     color: #666666;
     font-size: 25px;

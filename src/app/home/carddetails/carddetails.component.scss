@@ -1,12 +1,12 @@
 $background_color: #E40046;
 $text_color: #666666;
+$shadow: 2px 4px 7px 1px rgba(0,0,0,0.37);
+$font_family: softsoul,impact,sans-serif;
 .container {
     position: relative;
     border-radius: 5px;
-    background-image: linear-gradient(140deg,#FFDA3C,#FFFFE8,#FFC537,#FBA922,#FFFFE8,#FFFFE8,#FFD02D,#FAA41A,#FFFFE8,#FEBF35,#FEBF35);
-    border-color: #cd9292;
-    box-shadow: 2px 4px 7px 1px rgba(0,0,0,0.37);
-    padding: 10px 10px 5px 10px;
+    box-shadow: $shadow;
+    padding: 10px 10px 10px 10px;
     margin: 15px 10px 0 10px;
     .rarity {
         position: absolute;
@@ -18,6 +18,11 @@ $text_color: #666666;
         border: solid .5px #cd9292;
         border-radius: 5px;
     }
+    img:nth-child(3) {
+      position: absolute;
+      top: 15px;
+      right: 15px;  
+    }
     ion-label {
         position: absolute;
         bottom: 10px;
@@ -25,34 +30,94 @@ $text_color: #666666;
         width: 80%;
     }
 }
+.container._2stars {
+  background-image: linear-gradient(140deg,#9FB5C7,#D9FFFF,#97B5C9,#D9FFFF,#95ADBA,#D9FFFF,#9FB5C7,#9FB5C7);
+  border-color: #7a9aab;
+  ion-label {
+    padding: 0;
+    -webkit-text-stroke: 1px #7a9aab;
+    text-shadow: 2px 2px 0 #7a9aab, -1px -1px 0 #7a9aab, 1px -1px 0 #7a9aab, -1px 1px 0 #7a9aab, 1px 1px 0 #7a9aab;
+  }
+}
+.container._3stars {
+  background-image: linear-gradient(140deg,#FFDA3C,#FFFFE8,#FFC537,#FBA922,#FFFFE8,#FFFFE8,#FFD02D,#FAA41A,#FFFFE8,#FEBF35,#FEBF35);
+  border-color: #cd9292;
+  ion-label {
+    padding: 0;
+    -webkit-text-stroke: 1px #cd9292;
+    text-shadow: 2px 2px 0 #cd9292, -1px -1px 0 #cd9292, 1px -1px 0 #cd9292, -1px 1px 0 #cd9292, 1px 1px 0 #cd9292;
+  }
+}
+.container._4stars {
+  background-image: linear-gradient(140deg,#F97EE6,#FEE4F8,#F8A382,#F8C74F,#A8E651,#4CE1EE,#669EF5,#E5E5FD,#ED7DDF);
+  border-color: #ce8cdc;
+  ion-label {
+    padding: 0;
+    -webkit-text-stroke: 1px #ce8cdc;
+    text-shadow: 2px 2px 0 #ce8cdc, -1px -1px 0 #ce8cdc, 1px -1px 0 #ce8cdc, -1px 1px 0 #ce8cdc, 1px 1px 0 #ce8cdc;
+  }
+}
 ion-content {
   --background: url('/assets/img/bg_pattern.png');
+}
+ion-button {
+  font-family: $font_family;
+}
+.card_level {
+  color: $text_color;
+  font-size: 17px;
+}
+.card_level_selected {
+    background-color: $background_color;
+    color: white;
+    font-size: 17px;
+}
+.card_status {
+  padding: 10px;
+}
+.performance_bg {
+  background-color: #FFBCD4;
+  border-radius: 10px;
+}
+.technique_bg {
+  background-color: #BCE8FF;
+  border-radius: 10px;
+}
+.visual_bg {
+  background-color: #FFE8BC;
+  border-radius: 10px;
+}
+.overall_bg {
+  background-color: #C5CCF7;
+  border-radius: 10px;
 }
 .cards {
     width: 25%;
     height: 25%; 
     margin-left: 5px;
   }
+.art {
+  width: 50%;
+  height: 50%; 
+  margin-left: 5px;
+}
 .center_content {
     display:flex;
     justify-content: center;
     align-items: center;
 }
 .member_name {
-    font-family: softsoul,impact,sans-serif;
+    font-family: $font_family;
     transform: rotate(-3deg);
     text-align: right;
     right: 13px;
     color: #fff;
     margin: 0;
-    padding: 0;
-    -webkit-text-stroke: 1px #cd9292;
     font-style: italic;
-    text-shadow: 2px 2px 0 #cd9292, -1px -1px 0 #cd9292, 1px -1px 0 #cd9292, -1px 1px 0 #cd9292, 1px 1px 0 #cd9292;
 }
 ion-label {
     text-align: center;
-    font-family: 'Softsoul',impact,sans-serif;
+    font-family: $font_family;
     color: $text_color;
     font-size: 25px;
     text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;

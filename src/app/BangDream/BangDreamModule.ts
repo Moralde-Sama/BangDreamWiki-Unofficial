@@ -1,4 +1,5 @@
 export class Card {
+    protected cardDetails: CardDetailsModel;
     getCardRarity(rarityId: number, rotate: boolean): string {
         if (rarityId === 1) {
             return 'assets/rarity/1.png';
@@ -22,6 +23,31 @@ export class Card {
             }
         }
         return '';
+    }
+    setCardDetails(data: CardDetailsModel) {
+        this.cardDetails = data;
+    }
+    getCardStats(level: number): Array<number> {
+        const cardStats: Array<number> = [];
+        if (level === 1) {
+            cardStats[0] = this.cardDetails.performance_min;
+            cardStats[1] = this.cardDetails.technique_min;
+            cardStats[2] = this.cardDetails.visual_min;
+            cardStats[3] = cardStats[0] + cardStats[1] + cardStats[2];
+            return cardStats;
+        } else if (level === 30) {
+            cardStats[0] = this.cardDetails.performance_max;
+            cardStats[1] = this.cardDetails.technique_max;
+            cardStats[2] = this.cardDetails.visual_max;
+            cardStats[3] = cardStats[0] + cardStats[1] + cardStats[2];
+            return cardStats;
+        } else if (level === 60) {
+            cardStats[0] = this.cardDetails.performance_trained_max;
+            cardStats[1] = this.cardDetails.technique_trained_max;
+            cardStats[2] = this.cardDetails.visual_trained_max;
+            cardStats[3] = cardStats[0] + cardStats[1] + cardStats[2];
+            return cardStats;
+        }
     }
 }
 
@@ -115,14 +141,11 @@ export class Bands {
         }];
     setBand(memberId: number) {
         for (let index = 0; index < this.bandIndexList.length; index++) {
-            console.log(this.bandIndexList[index].membersId.includes(memberId));
-            console.log(index);
             if (this.bandIndexList[index].membersId.includes(memberId)) {
                 this.bandIndex = this.bandIndexList[index].bandIndex;
                 break;
             }
         }
-        console.log(this.bandIndex);
     }
     getMemberName(memberId: number): string {
         return this.bandMembers[this.bandIndex].bandMembersName[this.bandMembers[this.bandIndex].bandMembersId.indexOf(memberId)];
@@ -132,7 +155,7 @@ export class Bands {
     }
 }
 
-export class CardDetails {
+export class CardDetailsModel {
     id: number;
     member: number;
     i_rarity: number;
