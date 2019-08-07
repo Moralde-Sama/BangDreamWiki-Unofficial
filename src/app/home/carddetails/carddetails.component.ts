@@ -21,12 +21,16 @@ export class CarddetailsComponent implements OnInit {
     private renderer: Renderer2) { }
 
   async ngOnInit() {
-    this.cardDetails = JSON.parse(this.carddetails);
-    this.card.setCardDetails(this.cardDetails);
-    this.cardStats = this.card.getCardStats(1);
-    this.bands.setBand(this.cardDetails.member);
-    this.showCameo = this.cardDetails.cameo_members.length;
-    this.cardImgPath = this.cardDetails.art;
+    await (async () => {
+      this.cardDetails = JSON.parse(this.carddetails);
+      this.bands.setBand(this.cardDetails.member);
+    })();
+    await (async () => {
+      this.card.setCardDetails(this.cardDetails);
+      this.cardStats = this.card.getCardStats(1);
+      this.showCameo = this.cardDetails.cameo_members.length;
+      this.cardImgPath = this.cardDetails.art;
+    })();
     if (this.cardDetails.i_rarity === 2) {
       this.containerClass = '_2stars';
     } else if (this.cardDetails.i_rarity === 3) {

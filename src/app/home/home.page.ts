@@ -1,11 +1,12 @@
 import { Component, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { EventsService } from '../services/events/events.service';
-import { IonInfiniteScroll, ModalController, LoadingController } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController, LoadingController, Platform } from '@ionic/angular';
 import { Eventdetails2Component } from './eventdetails2/eventdetails2.component';
 import { CardDetail} from './class/home.class.card';
 import { PopoverController } from '@ionic/angular';
 import { FilterComponent } from './filter/filter.component';
 import * as moment from 'moment';
+import { CustomAnimation } from 'src/app/animation/custom';
 
 @Component({
   selector: 'app-home',
@@ -23,17 +24,26 @@ export class HomePage implements OnInit {
   private is_upcoming_sorted = false;
   private is_date_sorted = false;
   private is_reverse = false;
+  private backBtn: any;
   constructor(private eventsService: EventsService,
     private popoverCtrl: PopoverController, private modalCtrl: ModalController,
-    private loading: LoadingController, private renderer: Renderer2) {
+    private loading: LoadingController, private renderer: Renderer2, private platform: Platform) {
   }
   //
   async ngOnInit() {
-    const loading = await this.showLoading('Fetching Events...');
+    await this.init();
+    this.backBtn = this.platform.backButton.subscribe(() => {
+        navigator['app'].exitApp();
+    });
+  }
+  //
+  async init() {
+    const loading = await this.showLoading('Loading Events...');
     await loading.present();
     await this.getListEvents();
     this.cardsid = await this.eventsService.getCardIds();
     await this.loading.dismiss();
+    this.infiniteScroll.disabled = false;
   }
   //
   async showLoading(message: string) {
@@ -45,7 +55,7 @@ export class HomePage implements OnInit {
   //
   async showEventDetails(event: Object) {
     this.cardetails = [];
-    const loading = await this.showLoading('Fetching Event Details...');
+    const loading = await this.showLoading('Loading Event Details...');
     await loading.present();
     const maincard = event['main_card'];
     const secondarycard = event['secondary_card'];
@@ -71,9 +81,22 @@ export class HomePage implements OnInit {
     await loading.dismiss();
     const modal = await this.modalCtrl.create({
       component: Eventdetails2Component,
+      enterAnimation: CustomAnimation.SlideUp,
+      leaveAnimation: CustomAnimation.SlideDown,
       componentProps: { eventdata: JSON.stringify(event), carddetails: JSON.stringify(this.cardetails) }
     });
-    return await modal.present();
+    await modal.present().then(() => {
+      this.backBtn.unsubscribe();
+      this.backBtn = this.platform.backButton.subscribe(async () => {
+        await this.modalCtrl.dismiss();
+      });
+    });
+    if (await modal.onDidDismiss()) {
+      this.backBtn.unsubscribe();
+      this.backBtn = this.platform.backButton.subscribe(() => {
+        navigator['app'].exitApp();
+      });
+    }
   }
   //
   async getListEvents() {
@@ -132,6 +155,7 @@ export class HomePage implements OnInit {
           if (count === 0) {
             if (!this.is_upcoming_sorted) {
               await this.sortByUpcomingEvnt();
+              this.infiniteScroll.disabled = true;
             }
           } else if (count === 1) {
             if (!this.is_date_sorted) {
@@ -146,7 +170,7 @@ export class HomePage implements OnInit {
           if (count === 0 && this.is_upcoming_sorted) {
             this.is_upcoming_sorted = result;
             if (!this.is_date_sorted) {
-              await this.ngOnInit();
+              await this.init();
             }
           }
           if (count === 2 && this.is_reverse) {
@@ -202,7 +226,7 @@ export class HomePage implements OnInit {
     const currnt_date = new Date();
     let count = 0;
     const events = [];
-    const loading = await this.showLoading('Fetching Upcoming and Current Events');
+    const loading = await this.showLoading('Loading Upcoming and Current Events');
     await loading.present();
     while (1) {
       await this.eventsService.getEventsByPage(pagelink).then(data => {

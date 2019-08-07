@@ -4,6 +4,7 @@ import { EventType } from './class/eventdetails.class.eventtype';
 import { NavController, ModalController, Platform } from '@ionic/angular';
 import { CardDetail } from '../class/home.class.card';
 import { CarddetailsComponent } from '../carddetails/carddetails.component';
+import { CustomAnimation } from 'src/app/animation/custom';
 
 @Component({
   selector: 'app-eventdetails2',
@@ -22,9 +23,6 @@ export class Eventdetails2Component implements OnInit {
   ngOnInit() {
     this.eventDetails = JSON.parse(this.eventdata);
     this.cardsDetails = JSON.parse(this.carddetails);
-    this.platform.backButton.subscribe(() => {
-      this.modalCtrl.dismiss();
-    });
   }
   backbtn() {
     this.modalCtrl.dismiss();
@@ -35,12 +33,11 @@ export class Eventdetails2Component implements OnInit {
   async showCardDetails(card: CardDetail) {
     const modal = await this.modalCtrl.create({
       component: CarddetailsComponent,
+      enterAnimation: CustomAnimation.SlideUp,
+      leaveAnimation: CustomAnimation.SlideDown,
       componentProps: { carddetails: JSON.stringify(card)}
     });
     await modal.present();
-  }
-  async imgLoaded(index: number) {
-    console.log(index);
   }
 
 }
